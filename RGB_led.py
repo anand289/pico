@@ -21,6 +21,7 @@ lcd = I2cLcd(i2c, I2C_ADDR, 2, 16)
 
 while True:
     
+    pot_value = int(potentiometer.read_u16()/500)
     
     lcd.putstr("Red \n")
     lcd.putstr("Pot Vol:"+str(potentiometer.read_u16())) 
@@ -47,5 +48,11 @@ while True:
     utime.sleep(1)
     lcd.clear()
     
-    #print(potentiometer.read_u16())
+    # Write a function in lcdAPI that's able to display the bar on lcd. 
+#   lcd.fill_rect(1,15,pot_value,25,1)
+#   lcd.putstr()
+#   lcd.fill_rect(1,15,pot_value,25,0)
+#   utime.sleep()
     
+    
+    #print(potentiometer.read_u16())
