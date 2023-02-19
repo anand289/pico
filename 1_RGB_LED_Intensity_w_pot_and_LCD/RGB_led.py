@@ -7,8 +7,6 @@ led_red = machine.Pin(19,machine.Pin.OUT)
 led_green = machine.Pin(20,machine.Pin.OUT)
 led_blue = machine.Pin(21,machine.Pin.OUT)
 
-rgb_led_ref = machine.Pin(18,machine.Pin.OUT)
-rgb_led_ref.value(1)
 
 potentiometer = machine.ADC(28)
 
