@@ -3,9 +3,9 @@ import utime
 from pico_i2c_lcd import I2cLcd
 
 
-led_red = machine.Pin(19,machine.Pin.OUT)
-led_green = machine.Pin(20,machine.Pin.OUT)
-led_blue = machine.Pin(21,machine.Pin.OUT)
+led_red = machine.Pin(20,machine.Pin.OUT)
+led_green = machine.Pin(19,machine.Pin.OUT)
+led_blue = machine.Pin(18,machine.Pin.OUT)
 
 
 potentiometer = machine.ADC(28)
@@ -23,26 +23,26 @@ while True:
     
     lcd.putstr("Red \n")
     lcd.putstr("Pot Vol:"+str(potentiometer.read_u16())) 
-    led_red.value(0)
-    led_green.value(1)
-    led_blue.value(1)
+    led_red.value(1)
+    led_green.value(0)
+    led_blue.value(0)
     utime.sleep(1)
     lcd.clear()
     
     lcd.putstr("Green \n")
     lcd.putstr("Pot Vol:"+str(potentiometer.read_u16())) 
-    led_red.value(1)
-    led_green.value(0)
-    led_blue.value(1)
+    led_red.value(0)
+    led_green.value(1)
+    led_blue.value(0)
     utime.sleep(1)
     lcd.clear()
     
     lcd.putstr("Blue \n")
 
     lcd.putstr("Pot Vol:"+str(potentiometer.read_u16())) 
-    led_red.value(1)
-    led_green.value(1)
-    led_blue.value(0)
+    led_red.value(0)
+    led_green.value(0)
+    led_blue.value(1)
     utime.sleep(1)
     lcd.clear()
     

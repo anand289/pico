@@ -11,9 +11,9 @@ import dht
 from pico_i2c_lcd import I2cLcd
 
 
-temp_PWM_blue  = machine.PWM(machine.Pin(21))
-temp_PWM_green  = machine.PWM(machine.Pin(20))
-temp_PWM_red  = machine.PWM(machine.Pin(19))
+temp_PWM_blue  = machine.PWM(machine.Pin(18))
+temp_PWM_green  = machine.PWM(machine.Pin(19))
+temp_PWM_red  = machine.PWM(machine.Pin(20))
 temp_PWM_blue.freq(50)
 temp_PWM_green.freq(50)
 temp_PWM_red.freq(50)
@@ -38,16 +38,16 @@ h_prev = d.humidity()
 
 
 max_temp = 27 # when led should only show red
-min_temp = 12 # when led should only show blue
+min_temp = 15 # when led should only show blue
 
 # intercept of a line passing through (x1,y1) (x2,y2)  = (y1*x2 - y2*x1)/(x2-x1)
-red_intercept = (max_temp*65536-min_temp*0)/(max_temp - min_temp)
-blue_intercept = (0*max_temp-65536*min_temp )/(max_temp - min_temp)
+blue_intercept = (max_temp*65536-min_temp*0)/(max_temp - min_temp)
+red_intercept = (0*max_temp-65536*min_temp )/(max_temp - min_temp)
 
 def set_temperature_color(temp):
-    temp_PWM_red.duty_u16(int((0-65536)*temp/(max_temp-min_temp) + red_intercept)) # line passing through two points (10,65536) and (30,0)
-    temp_PWM_green.duty_u16(int(65536)) #off                      
-    temp_PWM_blue.duty_u16(int((65536-0)*temp/(max_temp-min_temp) + blue_intercept)) # line passing through two points (10,0) and (30,65536)
+    temp_PWM_red.duty_u16(int((65536-0)*temp/(max_temp-min_temp) + red_intercept)) # line passing through two points (max_temp,65536) and (min_temp,0)
+    temp_PWM_green.duty_u16(int(0)) #off                      
+    temp_PWM_blue.duty_u16(int((0-65536)*temp/(max_temp-min_temp) + blue_intercept)) # line passing through two points (max_temp,0) and (min_temp,65536)
 
 set_temperature_color(d.temperature())
     
