@@ -21,5 +21,7 @@ Intensity can be controlled by potentiometer. LCD shows current temp and humidit
     1. pico mocro-python code. 
     2. Fritzzing circuit diagram. 
     3. Circuit diagram png. 
+    
+ 4. Distance Sensor: Intention is to detect the continuous distance of an object. In progress.. 
 
 
