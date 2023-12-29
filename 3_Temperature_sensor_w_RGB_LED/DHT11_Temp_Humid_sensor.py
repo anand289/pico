@@ -1,32 +1,28 @@
 '''
 temperature and humidity sensor using DHT11.
-led will turn red when temp near max_temp,
-and blue when temp. near min_temp
+led will turn
+red -> temp near max_temp,
+blue -> temp. near min_temp
 
 same can be selected for humidity
 blue -> near max_humd
 red -> near min_humd
 '''
 
-
 import machine
 import utime
 import dht
 from pico_i2c_lcd import I2cLcd
 
-
-temp_PWM_blue  = machine.PWM(machine.Pin(20))
-temp_PWM_green  = machine.PWM(machine.Pin(18))
-temp_PWM_red  = machine.PWM(machine.Pin(19))
+temp_PWM_blue  = machine.PWM(machine.Pin(18))
+temp_PWM_green  = machine.PWM(machine.Pin(19))
+temp_PWM_red  = machine.PWM(machine.Pin(20))
 temp_PWM_blue.freq(50)
 temp_PWM_green.freq(50)
 temp_PWM_red.freq(50)
 
-
-
 # initialize DHT11 sensor on pin 26
 d = dht.DHT11(machine.Pin(26))
-
 
 i2c = machine.I2C(0, sda = machine.Pin(0), scl = machine.Pin(1), freq=400000)
 I2C_ADDR = i2c.scan()[0]
@@ -40,12 +36,11 @@ lcd.putstr("\nHmd (%): "+str(d.humidity()))
 t_prev = d.temperature()
 h_prev = d.humidity()
 
-
 max_temp = 35 # when led should only show red
 min_temp = 10 # when led should only show blue
 
-max_humd = 60
-min_humd = 20
+max_humd = 70
+min_humd = 10
 
 # intercept of a line passing through (x1,y1) (x2,y2)  = (y1*x2 - y2*x1)/(x2-x1)
 blue_intercept = (max_temp*65536-min_temp*0)/(max_temp - min_temp)
@@ -90,7 +85,6 @@ while True:
     t = d.temperature()
     h = d.humidity()
 
-    
     if (t != t_prev) or (h !=h_prev):
         lcd.clear()
         lcd.putstr("Temp (C): "+str(t))
@@ -101,9 +95,8 @@ while True:
         # print temperature and humidity when changed
         print("Temperature:", d.temperature(), "C")
         print("Humidity:", d.humidity(), "%")
-        
-        
-        # set_temperature_color(d.temperature())
+               
+        #set_temperature_color(d.temperature())
         set_humidity_color(d.humidity())
         
         # will keep looping this if limit is exceeded and keep showing "high" or "low" on lcd unless within limits.
